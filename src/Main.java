@@ -4,32 +4,35 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        int n;
-
+        int nr_of_pairs;
         Scanner in = new Scanner(System.in);
 
-        n = in.nextInt();
+        nr_of_pairs = in.nextInt();
 
-        int[] vector = new int[n];
-        for (int i = 0; i < n; i++) {
-            vector[i] = in.nextInt();
+        int[] all_the_prime_pairs = new int[2 * nr_of_pairs];
+
+        for (int i = 0; i < all_the_prime_pairs.length; i++) {
+            all_the_prime_pairs[i] = in.nextInt();
         }
 
-        boolean swapped = true;
+        for (int i = 0; i < all_the_prime_pairs.length - 1; i += 2) {
+            int nr_of_primes_between_pairs = 0;
 
-        while (swapped){
-            swapped = false;
-            for (int i = 0; i < n-1; i++) {
-                if (vector[i]>vector[i+1]){
-                    int aux;
-                    aux = vector[i+1];
-                    vector[i+1] = vector[i];
-                    vector [i] = aux;
-                    swapped = true;
+            for (int j = all_the_prime_pairs[i]; j <= all_the_prime_pairs[i + 1]; j++) {
+                int is_prime = 1;
+
+                for (int d = 2; d <= j / 2; d++) {
+                    if (j % d == 0) {
+                        is_prime = 0;
+                        break;
+                    }
+                }
+
+                if (is_prime == 1) {
+                    nr_of_primes_between_pairs++;
                 }
             }
+            System.out.print(nr_of_primes_between_pairs + " ");
         }
-
-        System.out.println(Arrays.toString(vector));
     }
 }
